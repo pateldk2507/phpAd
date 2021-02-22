@@ -2,6 +2,9 @@
 session_start();
 $email=$_SESSION['email'];
 $name = $_SESSION['name'];
+if(empty($email)){
+    header("Location: ../login.php");
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,13 +92,13 @@ $name = $_SESSION['name'];
                         <h1 class="page-header">
                             Welcome <?php echo $name;?>
                         </h1>
+                        
 <?php 
 	//session_start();
 	include_once "../config.php";
 	$email=$_SESSION['email'];	
 	$get="SELECT * FROM `client` WHERE email='$email'";
 	$query=mysqli_query($conn,$get);
-
 
 echo "<div class='bs-example4' data-example-id='contextual-table' style='overflow-x:auto;'><table class='table table-striped table-hover table-bordered table-responsive'>
     <tr class = 'table info'>
@@ -165,6 +168,8 @@ echo "<table class='table table-striped table-hover table-bordered table-respons
   <th>Address</th>
   <th>Phone</th>
   <th>Date</th>
+  <th>Category</th>
+  <th>Publish on </th>
   <th>Height</th>
   <th>Width</th>
   <th>Image</th>
@@ -177,6 +182,8 @@ $desc= $res['AdDesc'];
 $phone=$res['ClientPhone'];
 $addr=$res['ClientAddr'];
 $date=$res['StartDate'];
+$cat = $res['category'];
+$pub  = $res['publish'];
 $height=$res['height'];
 $width=$res['width'];
 $img = $res['ImageURL'];
@@ -189,6 +196,8 @@ $img = $res['ImageURL'];
   <td>$addr</td>
   <td>$phone</td>
   <td>$date</td>
+  <td>$cat</td>
+  <td>$pub</td>
   <td>$height</td>
   <td>$width</td>
   <td><img src=$img height='100px;' width='100px;' alt='preview not available'> </td>

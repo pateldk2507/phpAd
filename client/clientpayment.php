@@ -1,6 +1,7 @@
 <?php 
 session_start();
 $email=$_SESSION['email'];
+$name = $_SESSION['name'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +76,7 @@ $email=$_SESSION['email'];
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Welcome Client
+                            Welcome <?php echo $name ?>
                         </h1>
 <fieldset>
 
@@ -84,40 +85,39 @@ $email=$_SESSION['email'];
   include_once "../config.php";
   $email=$_SESSION['email'];
 
-  $select="SELECT DISTINCT adname,click_count,client_email FROM click_count WHERE client_email='$email' GROUP BY adname";
+  $select="select * from clientad where ClientEmail= '$email'";
   $query=mysqli_query($conn,$select);
     echo "<div class='bs-example4' data-example-id='contextual-table' style='overflow-x:auto;'><table class='table table-striped table-hover table-bordered table-responsive'>
     <tr class='table info'>
       <th>S. No.</th>
-      <th>Advetisement Name</th>
-      
-      <th>Click Count</th>
-      <th>Payment (Calculated as $0.75 for one click)</th>
-      <th>Get Payment</th>
-
-
+      <th>Advertise Title</th>
+      <th>Date</th>
+      <th>Select Plan </th>
+      <th> Total Amount </th>
+      <th>Payment Status</th>
+      <th>Complete your payment</th>
     </tr>";
     $counter =0;
   while($res=mysqli_fetch_array($query))
   {$counter++;
-  $email=$res['client_email'];
-  $adname=$res['adname'];
-  //$amount='$'.$res['amount'];
-  $imagepath='../advertiser/'.$res['imagepath'];
-  $click = $res['click_count'];
-  $payment=$click*0.75;
-  //$advname=$res['advertiser_name'];
-  //$advcontact=$res['contact'];
+  $adtitle=$res['AdTitle'];
+  $date = $res['StartDate'];
+  //$payment=$click*0.75;
   ?>
 
     <tr><?php echo "
       <td>$counter</td>
-      <td>$adname</td>
-      
-      <td>$click</td>
-      <td>$$payment</td>
+      <td>$adtitle</td>
+      <td>$date</td>
+      <td>  <select name='showAd' class='form-select' id='showAd'>
+      <option value='basic'>Basic</option>
+      <option value='pro'>Pro</option>
+      <option value='premium'>Premium</option>
+  </select> </td>
+  <td>1050</td>
+  <td>Pending</td>
       <td><form action = 'pay.php' method= 'POST'>
-           <input type='button' value = 'GET'>
+           <input type='button' value = 'PAY'>
            </form>
       </td>
 
@@ -132,15 +132,11 @@ $email=$_SESSION['email'];
 </table>
 </div>
 </fieldset>
-<input type="submit" value="Submit">
-      </form>
 
-
- 
-
-
-
-                </div>
+<h5> <b> Basic plan:</b>  show your ad on ads area of newspaper <br> for onlian ad it will show for 1 day </h5>
+<h5> <b>Pro plan:</b> show your ad on first page of newspaper <br> for onlian ad it will show for 3 days </h5>
+<h5> <b>Premium plan:</b> show your ad on first page and on our website <br> for onlian ad it will show for 7 days </h5>
+   </div>
                 <!-- /.row -->
 
             </div>

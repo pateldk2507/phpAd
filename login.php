@@ -53,7 +53,10 @@ else
 
 
 <input type="submit" name = "sub" value = "LOGIN" >
+<p><a href="client/clientsignup.php">Don't have account?</a></p>
 </form>
+
+
 </div>	 
 		</div>	
 		</div>

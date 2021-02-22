@@ -2,6 +2,9 @@
 session_start();
 $email=$_SESSION['email'];
 $name = $_SESSION['name'];
+if(empty($email)){
+    header("Location: login.php");
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +23,7 @@ $name = $_SESSION['name'];
 <link href="../css/lines.css" rel='stylesheet' type='text/css' />
 
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Nav CSS -->
@@ -83,56 +86,85 @@ $name = $_SESSION['name'];
   <fieldset>
 	<form onsubmit="event.preventDefault();">
 
-    <label for=""> <b style="font-size:20px">Where you want to show your advertise</b></label>
-        <select name="showAd" class="form-select" id="showAd">
+    <h4> <b style="font-size:25px"> Advertise Information </b> </h4>
+
+    <br><br>
+    <div>
+    <label for=""> <b> Where you want to show your advertise </b></label><br>
+        <select name="showAd"  class="form-control1 ng-invalid ng-invalid-required ng-touched" id="showAd">
+            <option value="0">Select Option</option>
             <option value="social">Social Media</option>
             <option value="news">News paper</option>
             <option value="web">On our Website</option>
         </select>
-
-
-        <br><br>
-
-
-		<label for="titleAd">Title for Ad</label>
-		<input type="text" id="title" name="title" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
-		
-		<br>
-		<label for="DescAd">Description for Ad</label>
-		<input type="text" id="desc" name="desc" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
-		
-		<br>
-		<label for="Mno">Mobile Number</label>
-		<input type="text" id="phone" name="phone" accept="number" maxlength="10" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
-		
-		<br>
-		<label for="Address">Address</label>
-		<input type="text" id="addr"  name="addr" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
-	
-
-		<br>
-		<label for="AdDate">Choose Date</label>
-		<input type="date" id="date" name="date"  required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+        </div>
 
         <br>
+        <div>
+        <label for=""> <b> Category of Advertise </b></label><br>
+        <select name="AdCat" class="form-control1 ng-invalid ng-invalid-required ng-touched" id="AdCat">
+            <option value="cat">Select Category</option>
+            <option value="marriage">Matrimonial</option>
+            <option value="edu">Educational</option>
+            <option value="bussiness">Business</option>
+            <option value="rental">Rental</option>
+            <option value="property">Property</option>
+            <option value="candc">Court and Company notices</option>
+            <option value="tender">Tender notices</option>
+            <option value="public">Public notices</option>
+            <option value="auction">Auction notices</option>
+        </select>
+        </div>
+        
+        <br>
+        <div>
+		<label for="titleAd"><b>Title for Ad</b></label>
+		<input type="text" id="title" name="title" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+		</div>
+
+		<br>
+        <div>
+		<label for="DescAd"><b>Description for Ad</b></label>
+		<input type="text" id="desc" name="desc" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+		</div>
+
+		<br>
+        <div>
+		<label for="Mno"><b>Mobile Number</b></label>
+		<input type="text" id="phone" name="phone" accept="number" maxlength="10" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+		</div>
+
+
+		<br>
+        <div>
+		<label for="Address"><b>Address</b></label>
+		<input type="text" id="addr"  name="addr" required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+        </div>
+
+		<br>
+        <div>
+		<label for="AdDate"><b>Choose Date</b></label>
+		<input type="date" id="date" name="date"  required class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+        </div>
+        
+        <br>
         <div id="Adsize">
-            <label for="Adsize"> Size of Ad.</label> <br>
+            <label for="Adsize"><b> Size of Ad.</b></label> <br>
             <input type="number" id="height" name="height" placeholder="Height"> X
             <input type="number" id="width" name="width" placeholder="Width">
         </div>
 
 	
 		<br>
-		<label for="image">Upload image (optional)</label>
+		<label for="image"><b>Upload image(optional)</b></label>
 		<input type="file" id="image" name="getImage">
 		
         <br>
         
         <input type="hidden" id="ClientEmail" name="ClientEmail" value="<?php echo $email ?>">
-        
-
+    
     <br>
-		<input  type="button"  id="butsave" onclick="uploadImage();" style="margin-bottom:10px;"  class="btn btn-primary">
+		<input  type="button" value = 'SUBMIT' id="butsave" onclick="uploadImage();" style="margin-bottom:10px;"  class="btn btn-primary">
 	</form>
 	</fieldset>
 </div>
@@ -157,26 +189,6 @@ $name = $_SESSION['name'];
       <!-- Bootstrap Core JavaScript -->
       <script src="js/bootstrap.min.js"></script>
 
-    <script>
-        $(document).ready(function(){
-            $("#showAd").change(function()
-                {
-                    if($(this).val() == "web")
-                        {
-                            $("#Adsize").hide();
-                            
-                            
-                        }
-                    else
-                        {
-                            $("#Adsize").show();
-                            
-                            
-                        }
-                    });
-        
-});
-    </script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
@@ -205,10 +217,12 @@ $name = $_SESSION['name'];
   console.log(firebase);
 
   function uploadImage(){
-      alert('hello');
      const ref = firebase.storage().ref();
      const file = document.querySelector("#image").files[0];
-     const name = new Date() + '-' + file.name;
+     if(!file){
+         saveData("");
+     }else{
+        const name = new Date() + '-' + file.name;
      const metadata = {
          contentType : file.type
      }
@@ -219,6 +233,8 @@ $name = $_SESSION['name'];
                saveData(url);
      })
 
+     }
+     
     }
   function saveData(myurl){
                 var title = $('#title').val();
@@ -230,7 +246,8 @@ $name = $_SESSION['name'];
                 var width = $('#width').val();
                 var ClientEmail = $('#ClientEmail').val();
                 var imgUrl = myurl;
-
+                var category = $('#AdCat').find(":selected").text();
+                var publish = $('#showAd').find(":selected").text();
                 $.ajax({
 				url: "saveAd.php",
 				type: "POST",
@@ -243,7 +260,9 @@ $name = $_SESSION['name'];
                     date : date,
                     height : height,
                     width : width,
-                    imageUrl : imgUrl				
+                    imageUrl : imgUrl,
+                    category : category,
+                    publish : publish
 				},
                 cache: false,
                 success: function(dataResult){
@@ -257,15 +276,7 @@ $name = $_SESSION['name'];
 				}
 			});
 		}
-		
-
-
-
-
 </script>
-
-  
-
 </body>
 
 </html>

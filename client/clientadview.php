@@ -103,16 +103,16 @@ if(empty($email)){
         <div>
         <label for=""> <b> Category of Advertise </b></label><br>
         <select name="AdCat" class="form-control1 ng-invalid ng-invalid-required ng-touched" id="AdCat">
-            <option value="cat">Select Category</option>
-            <option value="marriage">Matrimonial</option>
-            <option value="edu">Educational</option>
-            <option value="bussiness">Business</option>
-            <option value="rental">Rental</option>
-            <option value="property">Property</option>
-            <option value="candc">Court and Company notices</option>
-            <option value="tender">Tender notices</option>
-            <option value="public">Public notices</option>
-            <option value="auction">Auction notices</option>
+        <option value='cat'>Select Category</option>
+          <?php 
+
+            include_once "../config.php";
+            $sql = "select category  from category ";
+            $qry = mysqli_query($conn,$sql);
+            while($res = mysqli_fetch_array($qry)){
+                $cat = $res['category'];
+                echo "<option value=$cat>$cat</option>";
+        } ?>
         </select>
         </div>
         
@@ -160,11 +160,28 @@ if(empty($email)){
 		<input type="file" id="image" name="getImage">
 		
         <br>
+
+    <div>
+    <label for=""> <b> select your plan </b></label><br>
+        <select name="plan"  class="form-control1 ng-invalid ng-invalid-required ng-touched" id="plan">
+                <option value="select plan"> Select Plan </option>
+        <?php 
         
+            $sql = "select plan  from plans ";
+            $qry = mysqli_query($conn,$sql);
+            while($res = mysqli_fetch_array($qry)){
+                $cat = $res['plan'];
+                echo "<option value=$cat>$cat</option>";
+        } ?>
+        </select>
+        </div>  
+
+<br><br>
+
         <input type="hidden" id="ClientEmail" name="ClientEmail" value="<?php echo $email ?>">
     
     <br>
-		<input  type="button" value = 'SUBMIT' id="butsave" onclick="uploadImage();" style="margin-bottom:10px;"  class="btn btn-primary">
+		<input  type="button" id="btnSubmit"  value = 'SUBMIT' id="butsave" onclick="uploadImage();" style="margin-bottom:10px;"  class="btn btn-primary">
 	</form>
 	</fieldset>
 </div>
@@ -217,6 +234,8 @@ if(empty($email)){
   console.log(firebase);
 
   function uploadImage(){
+
+    $("#btnSubmit").attr("disabled", true);
      const ref = firebase.storage().ref();
      const file = document.querySelector("#image").files[0];
      if(!file){
@@ -237,6 +256,7 @@ if(empty($email)){
      
     }
   function saveData(myurl){
+      alert("Your ad preference is saved, make sure you complete payment to publish it!")
                 var title = $('#title').val();
 	        	var desc = $('#desc').val();
 		        var phone = $('#phone').val();
@@ -246,8 +266,10 @@ if(empty($email)){
                 var width = $('#width').val();
                 var ClientEmail = $('#ClientEmail').val();
                 var imgUrl = myurl;
-                var category = $('#AdCat').find(":selected").text();
-                var publish = $('#showAd').find(":selected").text();
+                var category = $('#AdCat').find(":selected").val();
+                var publish = $('#showAd').find(":selected").val();
+                var plan = $('#plan').find(":selected").val();
+                
                 $.ajax({
 				url: "saveAd.php",
 				type: "POST",
@@ -262,13 +284,16 @@ if(empty($email)){
                     width : width,
                     imageUrl : imgUrl,
                     category : category,
-                    publish : publish
+                    publish : publish,
+                    plan : plan
 				},
                 cache: false,
                 success: function(dataResult){
                     var dataResult = JSON.parse(dataResult);
 					if(dataResult.statusCode==200){
                         alert("Add Success");
+                        $("#btnSubmit").attr("disabled", false);
+                        location.replace("../feedback/formpage.php");
 					}
 					else if(dataResult.statusCode==201){
                         alert("Failed");

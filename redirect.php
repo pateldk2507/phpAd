@@ -6,7 +6,7 @@
 	}
 	else
 	{
-		header("location: client/clientpanel.php");
+		header("location: client/clientprofile.php");
 			
 	}
 	

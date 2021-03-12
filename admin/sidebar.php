@@ -4,18 +4,33 @@
                     <li>
                         <a href="adminpanel.php"><i class="fa fa-dashboard fa-fw nav_icon"></i> Dashboard</a>
                     </li>
+
                     <li>
-                        <a href="adminviewadvertiser.php"><i class="fa fa-table nav_icon"></i>View/Delete Registered Advertisers</a>
+                    <a href="category.php"><i class="fa fa-table nav_icon"></i>Manage Category </a>
                     </li>
+
+                    <li>
+                    <a href="plan.php"><i class="fa fa-table nav_icon"></i>Manage Plan </a>
+                    </li>
+
+
+                    <li>
+                    <a href="ecopy.php"><i class="fa fa-table nav_icon"></i>Upload E copy </a>
+                    </li>
+
+
+                   <li>
+                        <a href="manageAd.php"><i class="fa fa-table nav_icon"> </i> Manage Ads </a>
+                   </li>
+
+                   <li>
+                        <a href="feedback.php"><i class="fa fa-table nav_icon"> </i> View Feedback </a>
+                   </li>
                     <li>
                         <a href="adminviewclient.php"><i class="fa fa-table nav_icon"></i>View/Delete Registered Clients</a>
                     </li>
-                      <li>
-                        <a href="viewadsadmin.php"><i class="fa fa-table nav_icon"></i>View/Delete Uploaded Ads</a>
-                    </li>
-                    <li>
-                        <a href="viewadvertiserpayment.php"><i class="fa fa-table nav_icon"></i>View Advertiser Payment Details</a>
-                    </li>
+                      
+
                      <li>
                         <a href="viewclientpayment.php"><i class="fa fa-table nav_icon"></i>View Client Payment Details</a>
                     </li>

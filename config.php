@@ -1,15 +1,16 @@
 <?php
-$username = 'id13034626_dhavalmets';
-$password = '{&rE#I#abgknhlM3';
+$username = 'root';
+$password = '';
 $hostname = 'localhost';
-$databasename='id13034626_mets';
+$databasename='adserverdatabase';
 $conn = mysqli_connect($hostname, $username, $password, $databasename);
 
 if($conn){
 	//echo 'successfully connected'. '<br>';
 
 }else{
-	die(mysql_connect_error($conn));
+	die(mysqli_connect_error($conn));
+	echo   'Error: '.mysqli_error($conn);
 }
 
 

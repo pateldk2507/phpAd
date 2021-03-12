@@ -83,7 +83,8 @@ $email=$_SESSION['email'];
 	
 		$id=$_SESSION['email'];
 	
-		$conn = mysqli_connect('localhost', 'root', '', 'adserverdatabase');
+        include_once  '../config.php';
+
 		$qry = "select * from client where email='$id'";
 		$query=mysqli_query($conn,$qry);
 		
@@ -105,25 +106,13 @@ $email=$_SESSION['email'];
 		<input type="number" name="client_mno"  value="<?php echo $res['phone'] ?>" class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
 		
 		<br><br>
-		<label id="email">Company Name</label>
-		<input type="text"	name="client_company" value="<?php echo $res['company'] ?>" class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
-		
-		<br><br>
-		<label id="email">Website</label>
-		<input type="text" name="client_website" value="<?php echo $res['sitename'] ?>" class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
-		
-		
-		<br><br>
 		<label id="email">Address</label>
 		<input type="text" name="client_address" value="<?php echo $res['address'] ?>" class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
 		
 		<br><br>
 		<label id="email">Email</label>
-		<input type="email" name="email" value="<?php echo $res['email'] ?>" class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
+		<input type="email" name="email" disabled value="<?php echo $res['email'] ?>" class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
 		
-		<br><br>
-		<label id="email">Password</label>
-		<input type="password" name="pass"  class="form-control1 ng-invalid ng-invalid-required ng-touched" ng-model="model.name">
 		
 		
 		
@@ -170,17 +159,16 @@ if(isset($_POST['sub']))
 	$chkemail=$_SESSION['email'];
 	include_once '../config.php';
 	
-	if (!empty($_POST['email'])  && !empty($_POST['client_name']) && !empty($_POST['client_mno']) && !empty($_POST['client_address']) && !empty($_POST['client_company'])) 
+	if (!empty($_POST['client_name']) && !empty($_POST['client_mno']) && !empty($_POST['client_address'])) 
 	{
 		
 		$name =  $_POST['client_name'];
 		$mno = $_POST['client_mno'];
-		$cmp = $_POST['client_company'];
 		$addr = $_POST['client_address'];
-		$web = $_POST['client_website'];
-		$pass = $_POST['pass'];
 		
-		$insert2 = "UPDATE client SET email='$email',password='$pass',client_name='$name',phone='$mno',company='$cmp',sitename='$web',address='$addr' WHERE email='$chkemail'";
+		
+		
+		$insert2 = "UPDATE client SET client_name='$name',phone='$mno',address='$addr' WHERE email='$chkemail'";
 		$query2 = mysqli_query($conn, $insert2);
 		
 		echo "<script>

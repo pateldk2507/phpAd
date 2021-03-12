@@ -78,14 +78,15 @@ if($_SESSION['uname']=='root'){
     $query=mysqli_query($conn,$get);
     echo "<div class='bs-example4' data-example-id='contextual-table' style='overflow-x:auto;'> <table class='table table-striped table-hover  info table-bordered table-responsive'>
         <tr>
+            <th> Index </th>
             <th>Client ID</th>
 
             <th>Name</th>
             <th>Email</th>
-            <th>Password</th>
-            <th>Website</th>
+            
+          
             <th>Contact</th>
-            <th>Company</th>
+          
             <th>Address</th>
             <th>Country</th>
             <th>Delete</th>
@@ -99,22 +100,21 @@ if($_SESSION['uname']=='root'){
     $name=$res['client_name'];
     $email=$res['email'];
     $pass=$res['password'];
-    $site=$res['sitename'];
+    
     $phone=$res['phone'];
-    $company=$res['company'];
+    
     $address=$res['address'];
     $country=$res['country'];
     $id=$res['id'];
     
         echo "<tr>
-      <td>$id</td>
-            
-            <td>$name</td>
+            <td>$counter </td>
+            <td>$id</td>
+             <td>$name</td>
             <td>$email</td>
-            <td>$pass</td>
-            <td>$site</td>
+            
             <td>$phone</td>
-            <td>$company</td>
+            
             <td>$address</td>
             <td>$country</td>
       <td>" ?> 

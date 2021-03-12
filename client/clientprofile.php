@@ -105,8 +105,7 @@ echo "<div class='bs-example4' data-example-id='contextual-table' style='overflo
       <th >Name</th>
       <th>Email</th>
       <th>Phone Number</th>
-      <th>Company</th>
-      <th>Website</th>
+      
 		<th>Address</th>
       <th>Country</th>
       <th>Edit</th>
@@ -119,8 +118,7 @@ echo "<div class='bs-example4' data-example-id='contextual-table' style='overflo
 	$clname=$res['client_name'];
 	$email= $res['email'];
 	$phone=$res['phone'];
-	$company=$res['company'];
-	$site=$res['sitename'];
+	
 	$address=$res['address'];
 	$country=$res['country'];
 	$id=$res['id'];
@@ -131,9 +129,7 @@ echo "<div class='bs-example4' data-example-id='contextual-table' style='overflo
       <td>$clname</td>
       <td>$email</td>
       <td>$phone</td>
-      <td>$company</td>
-      <td>$site</td>
-
+     
       <td>$address</td>
       <td>$country</td>
 

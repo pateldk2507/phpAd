@@ -17,7 +17,11 @@
                     </li>
                     
                     <li>
-                        <a href="clientpayment.php"><i class="fa fa-fw fa-edit"></i>Payment</a>
+                        <a href="clientpayment.php"><i class="fa fa-fw fa-inr"></i> Payment</a>
+                    </li> 
+
+                    <li>
+                        <a href="changepassword.php"><i class="fa fa-fw fa-edit"></i> Change Password</a>
                     </li> 
 					
                     

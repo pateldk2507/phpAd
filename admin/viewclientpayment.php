@@ -11,6 +11,7 @@
     <link href="../css/style.css" rel='stylesheet' type='text/css' />
 
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- Graph CSS -->
 <link href="../css/lines.css" rel='stylesheet' type='text/css' />
 <link href="css/font-awesome.css" rel="stylesheet"> 
@@ -72,85 +73,58 @@
                     Client Payment Details
                         </h1>
                     
-<?php 
+
+                        <?php 
   //session_start();
   include_once "../config.php";
-
-  $select="SELECT DISTINCT adname,click_count,client_email FROM click_count ORDER BY client_email";
-  $query=mysqli_query($conn,$select);
   
-    echo "
-    <div class='bs-example4' data-example-id='contextual-table' style='overflow-x:auto;'><table class='table table-striped table-hover table-bordered table-responsive'>
+
+  $select="select * from clientad ";
+  $query=mysqli_query($conn,$select);
+    echo "<div class='bs-example4' data-example-id='contextual-table' style='overflow-x:auto;'><table class='table table-striped table-hover table-bordered table-responsive'>
     <tr class='table info'>
       <th>S. No.</th>
-      <th>Email</th>
-      <th>Advetisement Name</th>
-  
-      <th>Click Count</th>
-      <th>Payment (Calculated as $0.75 for one click)</th>
-
-
+      <th>Advertise Title</th>
+      <th>Date</th>
+      <th>Selected Plan </th>
+      <th> Total Amount </th>
+      <th>Payment Status</th>
+      
     </tr>";
     $counter =0;
   while($res=mysqli_fetch_array($query))
   {$counter++;
-  $email=$res['client_email'];
-  $adname=$res['adname'];
-  //$amount='$'.$res['amount'];
-  //$imagepath='../advertiser/'.$res['imagepath'];
-  $click = $res['click_count'];
-  $payment=$click*0.75;
-  //$advname=$res['advertiser_name'];
-  //$advcontact=$res['contact'];
+  $adtitle=$res['AdTitle'];
+  $date = $res['StartDate'];
+  $plan = $res['plan'];
+  $status = $res['payment'];
+  $payment=0;
+
+  if($plan=='Basic'){
+    $payment = 1000;
+  }else if($plan =='Pro'){
+    $payment = 1500;
+  }else if($plan == 'Premium'){
+    $payment = 2000;
+  }
   ?>
 
     <tr><?php echo "
       <td>$counter</td>
-      <td>$email</td>
-      <td>$adname</td>
- 
-      <td>$click</td>
-      <td>$$payment</td>
+      <td>$adtitle</td>
+      <td>$date</td>
+      <td>$plan</td>
+      <td>$payment</td>
+      <td>$status</td>
+    
+
       ";
     ?>
     </tr>
-    
- 
 <?php } ; ?>
  
 
 </table>
-<div class="graphs">
-      <div class="graph_box">
-      <div class="graph_box1">
-      <div class="col-md-4 grid_2"><div class="grid_1">
-        <h3>Bar</h3>
-        <canvas id="bar" height="300" width="400" style="width: 400px; height: 300px;"></canvas>
-      </div></div>
-</div>
-
-<script>
-      var barChartData = {
-      labels : ['January','February','March','April','May','June','July'],
-      datasets : [
-        {
-          fillColor : '#ef553a',
-          strokeColor : '#ef553a',
-          data : [65,59,90,81,56,55,40]
-        },
-        {
-          fillColor : '#00aced',
-          strokeColor : '#00aced',
-          data : [28,48,40,19,96,27,100]
-        }
-      ]
-      
-    };
-    new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
-      </script>
-
-</div>
-
 
 
      

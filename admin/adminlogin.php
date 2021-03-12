@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 if(isset($_POST['sub']))
 {	include_once "../config.php";
 	 $uname = $_POST['uname'];

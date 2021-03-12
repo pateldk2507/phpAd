@@ -19,8 +19,10 @@ $width  = $_POST['width'];
 $imageUrl = $_POST['imageUrl'];
 $category = $_POST['category'];
 $publish = $_POST['publish'];
+$plan = $_POST['plan'];
 
-$sql = "INSERT INTO `clientad`(`clientEmail`, `AdTitle`, `AdDesc`, `ClientPhone`, `ClientAddr`, `StartDate`, `height`, `width`, `ImageURL`, `category`,`publish`) VALUES ('$email','$title','$desc','$phone','$addr', '$date', '$height','$width', '$imageUrl' , '$category','$publish');";
+
+$sql = "INSERT INTO `clientad`(`clientEmail`, `AdTitle`, `AdDesc`, `ClientPhone`, `ClientAddr`, `StartDate`, `height`, `width`, `ImageURL`, `category`,`publish`,`plan`) VALUES ('$email','$title','$desc','$phone','$addr', '$date', '$height','$width', '$imageUrl' , '$category','$publish','$plan');";
 
 if (mysqli_query($conn, $sql)) {
     echo json_encode(array("statusCode"=>200));

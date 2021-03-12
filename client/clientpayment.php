@@ -21,6 +21,9 @@ $name = $_SESSION['name'];
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- jQuery -->
 <script src="../js/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Nav CSS -->
@@ -80,6 +83,7 @@ $name = $_SESSION['name'];
                         </h1>
 <fieldset>
 
+
       <?php 
   //session_start();
   include_once "../config.php";
@@ -92,7 +96,7 @@ $name = $_SESSION['name'];
       <th>S. No.</th>
       <th>Advertise Title</th>
       <th>Date</th>
-      <th>Select Plan </th>
+      <th>Selected Plan </th>
       <th> Total Amount </th>
       <th>Payment Status</th>
       <th>Complete your payment</th>
@@ -102,32 +106,109 @@ $name = $_SESSION['name'];
   {$counter++;
   $adtitle=$res['AdTitle'];
   $date = $res['StartDate'];
-  //$payment=$click*0.75;
+  $plan = $res['plan'];
+  $isPaied = $res['payment'];
+  $payment=0;
+
+  if($plan=='Basic'){
+    $payment = 1000;
+  }else if($plan =='Pro'){
+    $payment = 1500;
+  }else if($plan == 'Premium'){
+    $payment = 2000;
+  }
   ?>
 
     <tr><?php echo "
       <td>$counter</td>
       <td>$adtitle</td>
       <td>$date</td>
-      <td>  <select name='showAd' class='form-select' id='showAd'>
-      <option value='basic'>Basic</option>
-      <option value='pro'>Pro</option>
-      <option value='premium'>Premium</option>
-  </select> </td>
-  <td>1050</td>
-  <td>Pending</td>
-      <td><form action = 'pay.php' method= 'POST'>
-           <input type='button' value = 'PAY'>
-           </form>
+      <td>$plan</td>
+      <td>$payment</td>
+      <td>$isPaied</td>
+      <td>";
+      if($isPaied != 'Success'){
+
+        if($plan=='Basic'){
+         echo 
+         "<form>
+        <input type='button' name='btn' id='btn' value='Pay Now' onclick=pay_now('basic','$email') />
+        </form>";
+
+        }else if($plan == 'Pro'){
+            echo 
+          "<form>
+        <input type='button' name='btn' id='btn' value='Pay Now' onclick=pay_now('pro','$email') />
+        </form>";
+          
+        }
+        else if($plan == 'Premium'){
+          echo 
+          "<form>
+        <input type='button' name='btn' id='btn' value='Pay Now' onclick=pay_now('premium','$email') />
+        </form>";
+        }
+
+      }
+      else{
+          echo "Paid";
+      }
+        echo "
+        
+        
       </td>
 
       ";
     ?>
     </tr>
-    
- 
 <?php } ; ?>
  
+<script>
+function pay_now(plan,mid){
+        
+        var amount = 0;
+        if(plan == 'basic'){
+            amount = 1000;
+        }else if(plan == 'pro'){
+          amount = 1500;
+        }else if(plan == 'premium'){
+          amount = 2000;
+        }else{
+          amount = 3000;
+        }
+        
+         jQuery.ajax({
+               type:'post',
+               url:'payment_process.php',
+               data:"amt="+amount+"&name="+mid,
+               success:function(result){
+                   var options = {
+                        "key": "rzp_test_kpyf2eSN8IeE6J", 
+                        "amount": amount* 100, 
+                        "currency": "INR",
+                        "name": "Adserver ",
+                        "description": "Test Transaction",
+                        "image": "https://image.freepik.com/free-vector/logo-sample-text_355-558.jpg",
+                        "handler": function (response){
+                           jQuery.ajax({
+                               type:'post',
+                               url:'payment_process.php',
+                               data:"payment_id="+response.razorpay_payment_id+"&name="+mid,
+                               success:function(result){
+                                   window.location.href="thank_you.php";
+                               }
+                           });
+                        }
+                    };
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+               }
+           });
+        
+        
+    }
+
+</script>
 
 </table>
 </div>
